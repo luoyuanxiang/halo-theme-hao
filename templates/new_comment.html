@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{modules/layouts/layout :: layout(content = ~{::content}, htmlType = 'newComment',title = ${singlePage.spec.title + ' | ' + site.title}, head = ~{::head})}">
 <th:block th:fragment="head">
     <th:block th:replace="~{modules/common/open-graph :: open-graph(_title = ${singlePage.spec.title},
@@ -51,9 +51,15 @@
                 </div>
                 <th:block th:if="${!#strings.equals(theme.config.comments.use, 'commentWidget') }">
                     <script data-pjax th:inline="javascript">
-                        var postsData = [[${ postFinder.listAll() }]];
-                        var pageData = [[${ singlePageFinder.list(1, 50) }]];
-                        var articles = [{ path: '/links', title: '友链' }, { path: '/bangumis', title: '追番' }, { path: '/equipment', title: '我的装备' }, { path: '/moments', title: '瞬间' }, { path: '/photos', title: '图库' }];
+                        var postsData = [[${postFinder.listAll()}]];
+                        var pageData = [[${singlePageFinder.list(1, 50)}]];
+                        var articles = [{path: '/links', title: '友链'}, {
+                            path: '/bangumis',
+                            title: '追番'
+                        }, {path: '/equipment', title: '我的装备'}, {path: '/moments', title: '瞬间'}, {
+                            path: '/photos',
+                            title: '图库'
+                        }];
 
                         if (postsData.length > 0) {
                             postsData.map((item) => {
@@ -84,6 +90,7 @@
                         var isArtalk = config.use == 'Artalk';
                         var isWaline = config.use == 'Waline';
                         comments();
+
                         async function comments() {
                             if (isTwikoo) {
                                 fetch(GLOBAL_CONFIG.source.twikoo.twikooUrl, {
@@ -97,7 +104,7 @@
                                     headers: {
                                         "Content-Type": "application/json"
                                     }
-                                }).then(res => res.json()).then(async ({ data }) => {
+                                }).then(res => res.json()).then(async ({data}) => {
                                     const twikooArray = data.map(e => {
                                         return {
                                             'comment': changeContents(e.comment),
@@ -110,7 +117,9 @@
                                         }
                                     })
                                     renderer(twikooArray)
-                                }).catch((err) => { console.log(err); })
+                                }).catch((err) => {
+                                    console.log(err);
+                                })
                             }
                             if (isArtalk) {
                                 const statheaderList = {
@@ -139,14 +148,16 @@
                                         }
                                     })
                                     renderer(artalk)
-                                }).catch((err) => { console.log(err); })
+                                }).catch((err) => {
+                                    console.log(err);
+                                })
                             }
                             if (isWaline) {
                                 const loadWaline = () => {
                                     Waline.RecentComments({
                                         serverURL: GLOBAL_CONFIG.source.waline.serverURL,
                                         count: 50
-                                    }).then(({ comments }) => {
+                                    }).then(({comments}) => {
                                         const walineArray = comments.map(e => {
                                             return {
                                                 'comment': changeContents(e.comment),
@@ -159,7 +170,9 @@
                                             }
                                         })
                                         renderer(walineArray);
-                                    }).catch((err) => { console.log(err); })
+                                    }).catch((err) => {
+                                        console.log(err);
+                                    })
                                 }
                                 if (typeof Waline === 'object') loadWaline()
                                 else getScript(GLOBAL_CONFIG.source.waline.js).then(loadWaline)
@@ -192,6 +205,7 @@
                             })
                             document.getElementById('comments-page').innerHTML = html
                         }
+
                         function changeContents(content) {
                             if (content === '') return content
 
