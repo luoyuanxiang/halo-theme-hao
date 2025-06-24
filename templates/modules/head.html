@@ -169,10 +169,12 @@
     <!-- icon图标 -->
     <link rel="stylesheet" th:href="${assets_link + '/icon/iconfont.css' + theme_version}">
 
+
+
     <th:block th:replace="~{modules/variables/site-config}" />
 
     <!-- 小板报 -->
-    <th:block th:if="${not #strings.isEmpty(theme.config.sidebar.welcome.key)}">
+    <th:block th:if="${not #strings.isEmpty(theme.config.smallBoardNewspaper.key)}">
         <script defer th:src="${assets_link + '/libs/welcome/welcome.js' + theme_version}"></script>
     </th:block>
 
