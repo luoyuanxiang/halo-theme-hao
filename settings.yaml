@@ -4,6 +4,32 @@ metadata:
   name: theme-hao-setting
 spec:
   forms:
+    - $formkit: group
+      name: welcome
+      label: 小板报
+      value:
+        key:
+        locationLng:
+        locationLat:
+        children:
+          - $formkit: text
+            name: key
+            label: 腾讯地图服务key
+            value:
+            help: 获取地址https://lbs.qq.com/dev/console/application/mine
+          - $formkit: text
+            name: locationLng
+            label: 经度坐标
+            value: "113.215456"
+            help: 可访问 https://lbs.qq.com/getPoint 拾取坐标，示例：113.215456
+            placeholder: 请输入经度坐标
+          - $formkit: text
+            name: locationLat
+            label: 纬度坐标
+            help: 示例：22.582401
+            value: "22.582401"
+            placeholder: 请输入纬度坐标
+
     - group: basics
       label: 基础
       formSchema:

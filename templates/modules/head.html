@@ -171,5 +171,10 @@
 
     <th:block th:replace="~{modules/variables/site-config}" />
 
+    <!-- 小板报 -->
+    <th:block th:if="${not #strings.isEmpty(theme.config.sidebar.welcome.key)}">
+        <script defer th:src="${assets_link + '/libs/welcome/welcome.js' + theme_version}"></script>
+    </th:block>
+
 
 </th:block>
